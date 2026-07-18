@@ -1,0 +1,78 @@
+==================
+Line continuation (semicolon inference)
+==================
+
+continued = 1
+    - 1
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (binary_expression
+      (integer)
+      (integer))))
+
+==================
+Nested blocks
+==================
+
+foo =
+    a = 1
+    b = 2
+    a + b
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (block
+      (definition
+        (identifier)
+        (integer))
+      (definition
+        (identifier)
+        (integer))
+      (binary_expression
+        (identifier)
+        (identifier)))))
+
+==================
+Comments
+==================
+
+// a line comment
+/// a doc comment
+x = 1 // trailing
+/* block */ y = 2
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (integer))
+  (definition
+    (identifier)
+    (integer)))
+
+==================
+If split across lines
+==================
+
+when1 cond expr = if cond then
+    expr
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (identifier)
+    (identifier)
+    (if_expression
+      (identifier)
+      (block
+        (identifier)))))

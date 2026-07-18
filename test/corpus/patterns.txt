@@ -1,0 +1,85 @@
+==================
+Constructor and qualified patterns
+==================
+
+f x =
+    match x
+    | Some (Maybe.Some y) -> y
+    | None -> 0
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (identifier)
+    (block
+      (match_expression
+        (identifier)
+        (match_arm
+          (constructor_pattern
+            (type_identifier)
+            (constructor_pattern
+              (constructor_path
+                (type_identifier)
+                (type_identifier))
+              (identifier)))
+          (identifier))
+        (match_arm
+          (type_identifier)
+          (integer))))))
+
+==================
+Or patterns and alias patterns
+==================
+
+f x =
+    match x
+    | foo @ Some y | None -> foo
+    | bar @ baz -> bar
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (identifier)
+    (block
+      (match_expression
+        (identifier)
+        (match_arm
+          (or_pattern
+            (alias_pattern
+              (identifier)
+              (constructor_pattern
+                (type_identifier)
+                (identifier)))
+            (type_identifier))
+          (identifier))
+        (match_arm
+          (alias_pattern
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+==================
+Tuple patterns in parameters
+==================
+
+bar (a, b, c) = (a, b, c)
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (tuple_pattern
+      (identifier)
+      (tuple_pattern
+        (identifier)
+        (identifier)))
+    (parenthesized_expression
+      (tuple
+        (identifier)
+        (identifier)
+        (identifier)))))

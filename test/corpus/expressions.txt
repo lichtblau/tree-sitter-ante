@@ -1,0 +1,158 @@
+==================
+Operator precedence
+==================
+
+x = 1 + 2 * 3 / 4 * 5 - 6
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (binary_expression
+      (binary_expression
+        (integer)
+        (binary_expression
+          (binary_expression
+            (binary_expression
+              (integer)
+              (integer))
+            (integer))
+          (integer)))
+      (integer))))
+
+==================
+Pipelines and application operators
+==================
+
+main () =
+    a |> foo b c |> bar d e
+    bar d e <| foo b c <| a
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (unit)
+    (block
+      (binary_expression
+        (binary_expression
+          (identifier)
+          (call
+            (identifier)
+            (identifier)
+            (identifier)))
+        (call
+          (identifier)
+          (identifier)
+          (identifier)))
+      (binary_expression
+        (call
+          (identifier)
+          (identifier)
+          (identifier))
+        (binary_expression
+          (call
+            (identifier)
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+==================
+Application and member access
+==================
+
+main () = println (fib 10)
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (unit)
+    (call
+      (identifier)
+      (parenthesized_expression
+        (call
+          (identifier)
+          (integer))))))
+
+==================
+Lambdas
+==================
+
+double = fn x -> x * 2
+owning = move fn x -> x
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (lambda
+      (identifier)
+      (binary_expression
+        (identifier)
+        (integer))))
+  (definition
+    (identifier)
+    (lambda
+      (identifier)
+      (identifier))))
+
+==================
+Named constructor
+==================
+
+main () =
+    T with a = 1, b = 2, c = 3
+    T with a, b
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (unit)
+    (block
+      (named_constructor
+        (type_identifier)
+        (constructor_field
+          (identifier)
+          (integer))
+        (constructor_field
+          (identifier)
+          (integer))
+        (constructor_field
+          (identifier)
+          (integer)))
+      (tuple
+        (named_constructor
+          (type_identifier)
+          (constructor_field
+            (identifier)))
+        (identifier)))))
+
+==================
+Partial application placeholder
+==================
+
+main () =
+    foo _ a
+    2 + _
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (unit)
+    (block
+      (call
+        (identifier)
+        (placeholder)
+        (identifier))
+      (binary_expression
+        (integer)
+        (placeholder)))))

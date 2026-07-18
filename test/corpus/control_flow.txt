@@ -1,0 +1,151 @@
+==================
+If then else
+==================
+
+f x =
+    if x < 0 then "neg"
+    else "pos"
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (identifier)
+    (block
+      (if_expression
+        (binary_expression
+          (identifier)
+          (integer))
+        (string)
+        (string)))))
+
+==================
+Match expression
+==================
+
+area s =
+    match s
+    | Circle r -> r
+    | Rect w h -> w * h
+    | _ -> 0
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (identifier)
+    (block
+      (match_expression
+        (identifier)
+        (match_arm
+          (constructor_pattern
+            (type_identifier)
+            (identifier))
+          (identifier))
+        (match_arm
+          (constructor_pattern
+            (type_identifier)
+            (identifier)
+            (identifier))
+          (binary_expression
+            (identifier)
+            (identifier)))
+        (match_arm
+          (wildcard_pattern)
+          (integer))))))
+
+==================
+While loop
+==================
+
+main () =
+    var i = 0
+    while i < 3 do
+        println i
+        i += 1
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (unit)
+    (block
+      (definition
+        (identifier)
+        (integer))
+      (while_expression
+        (binary_expression
+          (identifier)
+          (integer))
+        (block
+          (call
+            (identifier)
+            (identifier))
+          (assignment
+            (identifier)
+            (integer)))))))
+
+==================
+For loop
+==================
+
+main () =
+    for i in 0 .. 10 do
+        println i
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (unit)
+    (block
+      (for_expression
+        (identifier)
+        (binary_expression
+          (integer)
+          (integer))
+        (block
+          (call
+            (identifier)
+            (identifier)))))))
+
+==================
+Loop and recur
+==================
+
+sum_up_to n =
+    loop n (total = 0) ->
+        if n <= 0 then total
+        else recur (n - 1) (total + n)
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (identifier)
+    (block
+      (loop_expression
+        (identifier)
+        (identifier)
+        (integer)
+        (block
+          (if_expression
+            (binary_expression
+              (identifier)
+              (integer))
+            (identifier)
+            (call
+              (identifier)
+              (parenthesized_expression
+                (binary_expression
+                  (identifier)
+                  (integer)))
+              (parenthesized_expression
+                (binary_expression
+                  (identifier)
+                  (identifier))))))))))

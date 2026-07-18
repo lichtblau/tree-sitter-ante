@@ -1,0 +1,136 @@
+==================
+Function definition
+==================
+
+fib n =
+    if n < 2 then n
+    else fib (n - 2) + fib (n - 1)
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (identifier)
+    (block
+      (if_expression
+        (binary_expression
+          (identifier)
+          (integer))
+        (identifier)
+        (binary_expression
+          (call
+            (identifier)
+            (parenthesized_expression
+              (binary_expression
+                (identifier)
+                (integer))))
+          (call
+            (identifier)
+            (parenthesized_expression
+              (binary_expression
+                (identifier)
+                (integer)))))))))
+
+==================
+Value bindings
+==================
+
+x = 1
+var y = 2
+(a, b) = pair
+first, second = pair
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (integer))
+  (definition
+    (identifier)
+    (integer))
+  (definition
+    (tuple_pattern
+      (identifier)
+      (identifier))
+    (identifier))
+  (definition
+    (tuple_binding
+      (identifier)
+      (identifier))
+    (identifier)))
+
+==================
+Method definition
+==================
+
+Vec.push (v: mut Vec t) (elem: t) : Unit =
+    array_insert v.data v.len elem
+
+---
+
+(source_file
+  (definition
+    (method_name
+      (type_identifier)
+      (identifier))
+    (typed_pattern
+      (identifier)
+      (reference_type
+        (type_application
+          (type_identifier)
+          (identifier))))
+    (typed_pattern
+      (identifier)
+      (identifier))
+    (type_identifier)
+    (block
+      (call
+        (identifier)
+        (member_access
+          (identifier)
+          (identifier))
+        (member_access
+          (identifier)
+          (identifier))
+        (identifier)))))
+
+==================
+Operator definition
+==================
+
+(.*) = deref
+
+---
+
+(source_file
+  (definition
+    (operator_reference)
+    (identifier)))
+
+==================
+Import and export
+==================
+
+import Std.Vec
+import Std.C.malloc, memcpy
+export foo, bar, Quux
+
+---
+
+(source_file
+  (import
+    (module_path
+      (type_identifier)
+      (type_identifier)))
+  (import
+    (module_path
+      (type_identifier)
+      (type_identifier)
+      (identifier))
+    (identifier))
+  (export
+    (identifier)
+    (identifier)
+    (type_identifier)))

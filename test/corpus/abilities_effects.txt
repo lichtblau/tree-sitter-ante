@@ -1,0 +1,117 @@
+==================
+Ability definition
+==================
+
+ability Add n = (+): fn n n -> n
+
+ability Cast a b =
+    cast: fn a -> b
+
+---
+
+(source_file
+  (ability_definition
+    (type_identifier)
+    (identifier)
+    (ability_declaration
+      (operator_reference)
+      (function_type
+        (identifier)
+        (identifier)
+        (identifier))))
+  (ability_definition
+    (type_identifier)
+    (identifier)
+    (identifier)
+    (ability_declaration
+      (identifier)
+      (function_type
+        (identifier)
+        (identifier)))))
+
+==================
+Ability implementation
+==================
+
+impl add_i32: Add I32 with
+    (+) x y = intrinsic "AddInt" x y
+
+---
+
+(source_file
+  (ability_impl
+    (identifier)
+    (type_application
+      (type_identifier)
+      (primitive_type))
+    (block
+      (definition
+        (operator_reference)
+        (identifier)
+        (identifier)
+        (call
+          (identifier)
+          (string)
+          (identifier)
+          (identifier))))))
+
+==================
+Effect handler with in clause
+==================
+
+main () =
+    handler h for
+      | log _ -> print "logged"
+    in
+        log "test" {h}
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (unit)
+    (block
+      (handler_expression
+        (identifier)
+        (handler_arm
+          (identifier)
+          (wildcard_pattern)
+          (call
+            (identifier)
+            (string)))
+        (block
+          (call
+            (identifier)
+            (string)
+            (implicit_argument
+              (identifier))))))))
+
+==================
+Effect handler without in clause
+==================
+
+main () =
+    handler h1 for log s -> print s
+    log "test1" {h1}
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (unit)
+    (block
+      (handler_expression
+        (identifier)
+        (handler_arm
+          (identifier)
+          (identifier)
+          (call
+            (identifier)
+            (identifier))))
+      (call
+        (identifier)
+        (string)
+        (implicit_argument
+          (identifier))))))

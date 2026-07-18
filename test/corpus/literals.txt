@@ -1,0 +1,97 @@
+==================
+Integer literals
+==================
+
+x = 42
+y = 9_223_372_036_854_775_807u64
+z = 0i64
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (integer))
+  (definition
+    (identifier)
+    (integer))
+  (definition
+    (identifier)
+    (integer)))
+
+==================
+Float literals
+==================
+
+a = 0.0
+b = 10_000.0
+c = 3.14f32
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (float))
+  (definition
+    (identifier)
+    (float))
+  (definition
+    (identifier)
+    (float)))
+
+==================
+String, char, bool, unit
+==================
+
+s = "hello"
+c = 'a'
+t = true
+u = ()
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (string))
+  (definition
+    (identifier)
+    (char))
+  (definition
+    (identifier)
+    (boolean))
+  (definition
+    (identifier)
+    (unit)))
+
+==================
+String interpolation
+==================
+
+greeting = "Hello ${name}!"
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (string
+      (interpolation
+        (identifier)))))
+
+==================
+Array literal
+==================
+
+xs = [1, 2, 3]
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (array
+      (integer)
+      (integer)
+      (integer))))

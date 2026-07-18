@@ -1,0 +1,124 @@
+==================
+Struct types
+==================
+
+type Struct1 = a: I32, b: F64, c: String
+
+type Struct2 t =
+    a: Thingy
+    b: Generic t Thingy
+
+---
+
+(source_file
+  (type_definition
+    (type_identifier)
+    (struct_body
+      (struct_field
+        (identifier)
+        (primitive_type))
+      (struct_field
+        (identifier)
+        (primitive_type))
+      (struct_field
+        (identifier)
+        (type_identifier))))
+  (type_definition
+    (type_identifier)
+    (identifier)
+    (struct_body
+      (struct_field
+        (identifier)
+        (type_identifier))
+      (struct_field
+        (identifier)
+        (type_application
+          (type_identifier)
+          (identifier)
+          (type_identifier))))))
+
+==================
+Tagged union types
+==================
+
+type Maybe a =
+    | Some a
+    | None
+
+type List a = | Nil | Cons a (ref List a)
+
+---
+
+(source_file
+  (type_definition
+    (type_identifier)
+    (identifier)
+    (union_body
+      (union_variant
+        (type_identifier)
+        (identifier))
+      (union_variant
+        (type_identifier))))
+  (type_definition
+    (type_identifier)
+    (identifier)
+    (union_body
+      (union_variant
+        (type_identifier))
+      (union_variant
+        (type_identifier)
+        (identifier)
+        (parenthesized_type
+          (reference_type
+            (type_application
+              (type_identifier)
+              (identifier))))))))
+
+==================
+Type aliases and references
+==================
+
+type UniquePtr a = ref a
+type Pair a = a, a
+
+---
+
+(source_file
+  (type_definition
+    (type_identifier)
+    (identifier)
+    (reference_type
+      (identifier)))
+  (type_definition
+    (type_identifier)
+    (identifier)
+    (tuple_type
+      (identifier)
+      (identifier))))
+
+==================
+Function types
+==================
+
+f: fn I32 I32 -> I32 = extern add
+g: fn a {Fail} -> b = extern g
+
+---
+
+(source_file
+  (definition
+    (identifier)
+    (function_type
+      (primitive_type)
+      (primitive_type)
+      (primitive_type))
+    (extern
+      (identifier)))
+  (definition
+    (identifier)
+    (function_type
+      (identifier)
+      (type_identifier)
+      (identifier))
+    (extern
+      (identifier))))
