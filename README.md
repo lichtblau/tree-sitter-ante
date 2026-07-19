@@ -3,6 +3,8 @@
 A [tree-sitter](https://tree-sitter.github.io/tree-sitter/) grammar for the
 [Ante](https://antelang.org) programming language (`.an` files).
 
+<img src="example.png" alt="Syntax-highlighted Ante example" width="400">
+
 ## Features
 
 Covers the surface syntax of Ante, including:
